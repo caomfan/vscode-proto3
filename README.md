@@ -10,11 +10,10 @@ https://github.com/zxh0/vscode-proto3
 
 _By default **ctrl-shift-p** opens the command prompt._
 
-| Command | Description |
-|---------|-------------|
+| Command                      | Description                                                                                              |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------- |
 | `proto3: Compile All Protos` | Compiles all workspace protos using [configurations](#extension-settings) defined with `protoc.options`. |
-| `proto3: Compile This Proto` | Compiles the active proto using [configurations](#extension-settings) defined with `protoc.options`. |
-
+| `proto3: Compile This Proto` | Compiles the active proto using [configurations](#extension-settings) defined with `protoc.options`.     |
 
 ## Features
 
@@ -35,27 +34,28 @@ The grammar is written in tmLanguage JSON format.
 
 ### Syntax Validation
 
-The validation is triggered when you save the proto file. You need protoc 
-compiler to enable syntax validation. You also need a settings.json file 
-to tell the extension the full path of protoc if it is not in `path`. 
+The validation is triggered when you save the proto file. You need protoc
+compiler to enable syntax validation. You also need a settings.json file
+to tell the extension the full path of protoc if it is not in `path`.
 
 ### Extension Settings
 
-Below is an example settings.json file which comes from 
+Below is an example settings.json file which comes from
 [example/.vscode](https://github.com/zxh0/vscode-proto3/tree/master/example/.vscode):
+
 ```json
 {
-    "protoc": {
-        "path": "/path/to/protoc",
-        "compile_on_save": false,
-        "options": [
-            "--proto_path=protos/v3",
-            "--proto_path=protos/v2",
-            "--proto_path=${workspaceRoot}/proto",
-            "--proto_path=${env.GOPATH}/src",
-            "--java_out=gen/java"
-        ]
-    }
+  "protoc": {
+    "path": "/path/to/protoc",
+    "compile_on_save": false,
+    "options": [
+      "--proto_path=protos/v3",
+      "--proto_path=protos/v2",
+      "--proto_path=${workspaceRoot}/proto",
+      "--proto_path=${env.GOPATH}/src",
+      "--java_out=gen/java"
+    ]
+  }
 }
 ```
 
@@ -63,28 +63,28 @@ Below is an example settings.json file which comes from
 
 The possible fields under the `protoc` extension settings which can be defined in a `settings.json` file.
 
-| Field            | Type     | Default          | Description                                                                    |
-| ---------------- | -------- | ---------------- | ------------------------------------------------------------------------------ |
-| path             | string   | _protoc in PATH_ | Path to protoc. Defaults to protoc in PATH if omitted.                         |
-| compile_on_save  | boolean  | false            | On `.proto` file save, compiles to `--*_out` location within `options`         |
-| compile_all_path | string   | Workspace Root   | Search Path for `Compile All Protos` action. Defaults to the Workspace Root    |
-| use_absolute_path| boolean  | false            | Set `true` for `compile_all_path` search files using absolute path             |
-| options          | string[] | []               | protoc compiler arguments/flags, required for proto validation and compilation |
-
+| Field                | Type     | Default          | Description                                                                    |
+| -------------------- | -------- | ---------------- | ------------------------------------------------------------------------------ |
+| path                 | string   | _protoc in PATH_ | Path to protoc. Defaults to protoc in PATH if omitted.                         |
+| compile_on_save      | boolean  | false            | On `.proto` file save, compiles to `--*_out` location within `options`         |
+| compile_all_path     | string   | Workspace Root   | Search Path for `Compile All Protos` action. Defaults to the Workspace Root    |
+| use_absolute_path    | boolean  | false            | Set `true` for `compile_all_path` search files using absolute path             |
+| options              | string[] | []               | protoc compiler arguments/flags, required for proto validation and compilation |
+| compole_active_proto | boolean  | false            | 保存时自动在当前目录下生成*.h,*.cc 文件                                        |
 
 #### In-Line Variables
 
 These variables can be used to inject variables strings within the `protoc` extension configurations. See above for examples.
 
-| Variable      | Description                              |
-| ------------- | ---------------------------------------- |
-| config.*      | Refer settings items in ``Preferences``. |
-| env.*         | Refer environment variable.              |
-| workspaceRoot | Returns current workspace root path.     |
+| Variable      | Description                            |
+| ------------- | -------------------------------------- |
+| config.\*     | Refer settings items in `Preferences`. |
+| env.\*        | Refer environment variable.            |
+| workspaceRoot | Returns current workspace root path.   |
 
 ### Code Completion
 
-A very simple parser is written to support code completion. 
+A very simple parser is written to support code completion.
 
 ### Code Snippets
 
@@ -139,6 +139,7 @@ Support "Format Document" if `clang-format` is in path, including custom `style`
 By default, `clang-format`'s standard coding style will be used for formatting. To define a custom style or use a supported preset add `"clang-format.style"` in VSCode Settings (`settings.json`)
 
 ### Example usage:
+
 `"clang-format.style": "google"`
 
 This is the equivalent of executing `clang-format -style=google` from the shell.
